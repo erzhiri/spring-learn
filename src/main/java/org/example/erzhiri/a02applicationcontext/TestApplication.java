@@ -2,6 +2,8 @@ package org.example.erzhiri.a02applicationcontext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletRegistrationBean;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebApplicationContext;
@@ -11,6 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -31,19 +35,19 @@ public class TestApplication {
 
 //        testAnnotationConfigApplicationContext();
 
-        testAnnotationConfigServletWebApplicationContext();
+//        testAnnotationConfigServletWebApplicationContext();
 
-//        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-//        for (String beanDefinitionName : beanFactory.getBeanDefinitionNames()) {
-//            System.out.println(beanDefinitionName);
-//        }
-//        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-//        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
-//        xmlBeanDefinitionReader.loadBeanDefinitions(new ClassPathResource("test1.xml"));
-//        xmlBeanDefinitionReader.loadBeanDefinitions(new FileSystemResource("src/main/resources/test1.xml"));
-//        for (String beanDefinitionName : beanFactory.getBeanDefinitionNames()) {
-//            System.out.println(beanDefinitionName);
-//        }
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        for (String beanDefinitionName : beanFactory.getBeanDefinitionNames()) {
+            System.out.println(beanDefinitionName);
+        }
+        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
+        xmlBeanDefinitionReader.loadBeanDefinitions(new ClassPathResource("test1.xml"));
+        xmlBeanDefinitionReader.loadBeanDefinitions(new FileSystemResource("src/main/resources/test1.xml"));
+        for (String beanDefinitionName : beanFactory.getBeanDefinitionNames()) {
+            System.out.println(beanDefinitionName);
+        }
 
 
     }
