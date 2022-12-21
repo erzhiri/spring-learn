@@ -1,11 +1,13 @@
 package org.example.erzhiri.a05beanfacotrypostprocessor;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.example.erzhiri.a05beanfacotrypostprocessor.mapper.TestMapper;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
 import javax.sql.DataSource;
 
 /**
@@ -35,6 +37,13 @@ public class Config {
         druidDataSource.setUsername("root");
         druidDataSource.setPassword("erzhiri");
         return druidDataSource;
+    }
+
+    @Bean
+    public MapperFactoryBean<TestMapper> mapper1(SqlSessionFactory sqlSessionFactory) {
+        MapperFactoryBean<TestMapper> mapperFactoryBean = new MapperFactoryBean<>(TestMapper.class);
+        mapperFactoryBean.setSqlSessionFactory(sqlSessionFactory);
+        return mapperFactoryBean;
     }
 
 }

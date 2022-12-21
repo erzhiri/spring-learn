@@ -7,6 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @Date 2022/12/20
  **/
 
-@Mapper
 public interface TestMapper {
 }

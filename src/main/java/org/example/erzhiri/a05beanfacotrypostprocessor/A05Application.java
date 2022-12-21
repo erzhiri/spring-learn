@@ -41,6 +41,7 @@ public class A05Application {
 //        context.registerBean(ComponentScanPostProcessor.class);
 
         context.registerBean(AtBeanPostProcessor.class);
+//        context.registerBean(MapperPostProcessor.class);
 
 
 
