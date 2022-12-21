@@ -1,6 +1,11 @@
 package org.example.erzhiri.a05beanfacotrypostprocessor;
 
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.BeanNameGenerator;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 import org.springframework.context.support.GenericApplicationContext;
@@ -31,24 +36,7 @@ public class A05Application {
 //        });
 
 
-        ComponentScan annotation = AnnotationUtils.findAnnotation(Config.class, ComponentScan.class);
-        if (null != annotation) {
-            String[] basePackages = annotation.basePackages();
-            for (String basePackage : basePackages) {
-                System.out.println(basePackage);
-                // org.example.erzhiri.a05beanfacotrypostprocessor.component -> classpath*:org/example/erzhiri/a05beanfacotrypostprocessor/component/**/*.class
-                String path = "classpath*:" + basePackage.replace(".", "/") + "/**/*.class";
-                System.out.println(path);
-                Resource[] resources = context.getResources(path);
-                CachingMetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory();
-                for (Resource resource : resources) {
-                    MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(resource);
-                    System.out.println("类：" + metadataReader.getClassMetadata().getClassName());
-                    System.out.println("注解：Component - " + metadataReader.getAnnotationMetadata().hasAnnotation(Component.class.getName()));
-                    System.out.println("注解：Component派生 - " + metadataReader.getAnnotationMetadata().hasMetaAnnotation(Component.class.getName()));
-                }
-            }
-        }
+        context.registerBean(ComponentScanPostProcessor.class);
 
         context.refresh();
 
