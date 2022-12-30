@@ -51,19 +51,34 @@ public class A17 {
 //        List<Advisor> advisors = aspectJAutoProxyCreator.findEligibleAdvisors(Target1.class, "target1");
         List<Advisor> advisors = aspectJAutoProxyCreator.findEligibleAdvisors(Target2.class, "target2");
         advisors.forEach(System.out::println);
+        System.out.println("---------------------------------------");
+
+        /**
+         * 第二个重要方法：wrapIfNecessary
+         * a. 它的内部调用  findEligibleAdvisors, 只要返回的集合不为空，则表示需要代理
+         */
+
+        Object target1 = aspectJAutoProxyCreator.wrapIfNecessary(new Target1(), "target1", "target1");
+        System.out.println(target1.getClass());
+        Object target2 = aspectJAutoProxyCreator.wrapIfNecessary(new Target2(), "target2", "target2");
+        System.out.println(target2.getClass());
+
+        Target1 target11 = (Target1) target1;
+        target11.foo();
+
     }
 
 
 
 
 
-    class Target1 {
+    static class Target1 {
         public void foo() {
             System.out.println(" foo ---");
         }
     }
 
-    class Target2 {
+    static class Target2 {
         public void bar() {
             System.out.println(" bar ---");
         }
@@ -74,12 +89,12 @@ public class A17 {
 
         @Before("execution(* foo())")
         public void before() {
-            System.out.println("before foo ---");
+            System.out.println("Aspect1 before foo ---");
         }
 
         @After("execution(* foo())")
         public void after() {
-            System.out.println("after foo ---");
+            System.out.println("Aspect1 after foo ---");
         }
     }
 
